@@ -1,0 +1,28 @@
+package ss2_loop_to_java.bai_tap;
+
+import java.util.Scanner;
+
+public class HienThi20SNTDauTien {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nhập số lượng số nguyên tố cần in: ");
+        int numbers = scanner.nextInt();
+        int count = 0;
+        int N = 2;
+
+        while (count < numbers) {
+            boolean laSoNguyenTo = true;
+            for (int i = 2; i <= Math.sqrt(N); i++) {
+                if (N % i == 0) {
+                    laSoNguyenTo = false;
+                    break;
+                }
+            }
+            if (laSoNguyenTo) {
+                System.out.print(N + " ");
+                count++;
+            }
+            N++;
+        }
+    }
+}
