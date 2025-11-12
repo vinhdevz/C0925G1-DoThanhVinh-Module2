@@ -1,4 +1,4 @@
-package ss6_inheritance_to_java.bai_tap;
+package ss6_inheritance_to_java.bai_tap.bai3;
 
 public class MovablePoint extends Point {
     private float xSpeed = 0.0f;
@@ -57,4 +57,3 @@ public class MovablePoint extends Point {
     }
 }
 
-x

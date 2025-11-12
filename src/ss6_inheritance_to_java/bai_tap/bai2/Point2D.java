@@ -1,4 +1,4 @@
-package ss6_inheritance_to_java.bai_tap;
+package ss6_inheritance_to_java.bai_tap.bai2;
 
 public class Point2D {
     private float x = 0.0f;
