@@ -1,16 +1,16 @@
 package Case_Study.entity;
 
-import javax.swing.plaf.PanelUI;
-
 public class Villa extends Facility {
     private String roomStandard;
     private double poolArea;
     private int numberOfFloors;
 
     public Villa() {
+        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
     }
 
     public Villa(String roomStandard, double poolArea, int numberOfFloors) {
+        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
         this.roomStandard = roomStandard;
         this.poolArea = poolArea;
         this.numberOfFloors = numberOfFloors;

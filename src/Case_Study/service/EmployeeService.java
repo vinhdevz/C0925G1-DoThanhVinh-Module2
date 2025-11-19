@@ -1,44 +1,33 @@
 package Case_Study.service;
-import entity.Employee;
-import service.IEmployeeService;
 
-import java.util.ArrayList;
+import Case_Study.entity.Employee;
+import Case_Study.repository.EmployeeRepository;
+import Case_Study.repository.IEmployeeRepository;
+
 import java.util.List;
 
 public class EmployeeService implements IEmployeeService {
 
-    private static List<Employee> employees = new ArrayList<>();
+    public static final IEmployeeRepository employeeRepository = new EmployeeRepository();
+
+
+    @Override
+    public void display() {
+        employeeRepository.display();
+    }
+
+    @Override
+    public void add(Employee item) {
+        employeeRepository.add(item);
+    }
+
+    @Override
+    public void edit(Employee item) {
+        employeeRepository.edit(item);
+    }
 
     @Override
     public List<Employee> getAll() {
-        return employees;
-    }
-
-    @Override
-    public void add(Employee employee) {
-        employees.add(employee);
-    }
-
-    @Override
-    public void update(String id, Employee employee) {
-        for (int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getId().equals(id)) {
-                employees.set(i, employee);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public Employee getById(String id) {
-        for (Employee e : employees) {
-            if (e.getId().equals(id)) return e;
-        }
-        return null;
-    }
-
-    @Override
-    public void delete(String id) {
-        employees.removeIf(e -> e.getId().equals(id));
+        return employeeRepository.getAll();
     }
 }

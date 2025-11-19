@@ -14,7 +14,17 @@ public class BookingService implements IBookingService{
     }
 
     @Override
+    public void display() {
+
+    }
+
+    @Override
     public void add(Booking booking) {
         bookings.add(booking);
+    }
+
+    @Override
+    public void edit(Booking item) {
+
     }
 }

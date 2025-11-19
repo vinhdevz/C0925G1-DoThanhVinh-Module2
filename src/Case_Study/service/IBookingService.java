@@ -4,7 +4,5 @@ import Case_Study.entity.Booking;
 
 import java.util.List;
 
-public interface IBookingService {
-    List<Booking> getAll();
-    void add(Booking booking);
+public interface IBookingService extends Service<Booking>{
 }

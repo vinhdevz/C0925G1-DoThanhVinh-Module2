@@ -4,9 +4,11 @@ public class Room extends Facility {
     private String freeService;
 
     public Room() {
+        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
     }
 
     public Room(String freeService) {
+        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
         this.freeService = freeService;
     }
 

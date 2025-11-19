@@ -5,9 +5,11 @@ public class House extends Facility {
     private int numberOfFloors;
 
     public House() {
+        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
     }
 
     public House(String roomStandard, int numberOfFloors) {
+        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
         this.roomStandard = roomStandard;
         this.numberOfFloors = numberOfFloors;
     }

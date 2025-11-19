@@ -1,43 +1,36 @@
 package Case_Study.service;
 
 import Case_Study.entity.Customer;
+import Case_Study.repository.CustomerRepository;
+import Case_Study.repository.ICustomerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerService implements ICustomerService{
-    private static List<Customer> customers = new ArrayList<>();
+public class CustomerService implements ICustomerService {
+
+    private final ICustomerRepository customerRepository;
+
+    public CustomerService() {
+        this.customerRepository = new CustomerRepository();
+    }
 
     @Override
-    public List<Customer> getAll() {
-        return customers;
+    public void display() {
+        customerRepository.display();
     }
 
     @Override
     public void add(Customer customer) {
-        customers.add(customer);
+        customerRepository.add(customer);
     }
 
     @Override
-    public void update(String id, Customer customer) {
-        for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getId().equals(id)) {
-                customers.set(i, customer);
-                break;
-            }
-        }
+    public void edit(Customer customer) {
+        customerRepository.edit(customer);
     }
 
     @Override
-    public Customer getById(String id) {
-        for (Customer c : customers) {
-            if (c.getId().equals(id)) return c;
-        }
-        return null;
-    }
-
-    @Override
-    public void delete(String id) {
-        customers.removeIf(c -> c.getId().equals(id));
+    public List<Customer> getAll() {
+        return customerRepository.getAll();
     }
 }

@@ -8,7 +8,7 @@ public class Facility {
     private int maxPeople;
     private String rentalType;
 
-    public Facility() {
+    public Facility(String sv001, String villaSunshine, String vip, int i, int i1, String daily, int i2) {
     }
 
     public Facility(String serviceCode, String serviceName, double usableArea, double rentalCost, int maxPeople, String rentalType) {

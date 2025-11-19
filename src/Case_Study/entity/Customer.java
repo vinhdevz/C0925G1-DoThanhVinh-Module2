@@ -34,8 +34,9 @@ public class Customer extends Person {
         this.address = address;
     }
 
+    @Override
     public String toString() {
-        return "Employee{" +
+        return "Customer{" +
                 "id = " + getId() +
                 ", name = " + getName() +
                 ", dob = " + getDateOfBirth() +
