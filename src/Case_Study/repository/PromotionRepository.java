@@ -1,6 +1,5 @@
 package Case_Study.repository;
 
-import Case_Study.entity.Contact;
 import Case_Study.service.IPromotionService;
 
 import java.util.ArrayList;

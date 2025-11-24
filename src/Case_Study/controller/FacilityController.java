@@ -1,55 +1,50 @@
 package Case_Study.controller;
 
 import Case_Study.entity.Facility;
+import Case_Study.service.FacilityService;
 import Case_Study.service.IFacilityService;
 import Case_Study.view.FacilityView;
 
 public class FacilityController {
 
-    private final IFacilityService service;
-    private final FacilityView view = new FacilityView();
+    private final IFacilityService service = new FacilityService();
 
-    public FacilityController(IFacilityService service) {
-        this.service = service;
-    }
-
-    public void menuFacility() {
+    public void runFac() {
         while (true) {
-            int choice = view.showMenu();
+            FacilityView.displayMenuFacility();
+            String choice = new java.util.Scanner(System.in).nextLine().trim();
+
             switch (choice) {
-                case 1 -> view.displayList(service.getAllWithUsage());
-                case 2 -> addNewFacility();
-                case 3 -> view.displayMaintenance(service.getAllWithUsage());
-                case 4 -> {
-                    System.out.println("Returning to main menu...\n");
+                case "1" -> service.displayListFacility();
+                case "2" -> addNewFacility();
+                case "3" -> service.displayMaintenance();
+                case "4" -> {
+                    System.out.println("Quay lại menu chính...\n");
                     return;
                 }
-                default -> view.showError("Choose 1-4 only!");
+                default -> System.out.println("Chỉ chọn 1-4 thôi!");
             }
         }
     }
 
     private void addNewFacility() {
-        while (true) {
-            int typeChoice = view.showAddMenu();
-            if (typeChoice == 4) return;
+        System.out.println("\n1. Villa\n2. House\n3. Room");
+        System.out.print("Chọn loại: ");
+        String ch = new java.util.Scanner(System.in).nextLine();
 
-            String type = switch (typeChoice) {
-                case 1 -> "Villa";
-                case 2 -> "House";
-                case 3 -> "Room";
-                default -> null;
-            };
-            if (type == null) {
-                view.showError("Choose 1-3!");
-                continue;
+        Facility f = switch (ch) {
+            case "1" -> FacilityView.inputVilla();
+            case "2" -> FacilityView.inputHouse();
+            case "3" -> FacilityView.inputRoom();
+            default -> {
+                System.out.println("Không hợp lệ!");
+                yield null;
             }
+        };
 
-            String code = service.generateCode(type);
-            Facility f = view.createFacility(code, type);
-
-            service.add(f);
-            view.showSuccess("Successfully added " + type + ": " + f.getServiceName());
+        if (f != null) {
+            service.addNewFacility(f);
+            System.out.println("ĐÃ THÊM THÀNH CÔNG VÀ LƯU VÀO HỆ THỐNG!");
         }
     }
 }

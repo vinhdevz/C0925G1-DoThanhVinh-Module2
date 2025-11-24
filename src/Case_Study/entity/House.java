@@ -5,16 +5,10 @@ public class House extends Facility {
     private int numberOfFloors;
 
     public House() {
-        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
     }
 
-    public House(String roomStandard, int numberOfFloors) {
-        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
-        this.roomStandard = roomStandard;
-        this.numberOfFloors = numberOfFloors;
-    }
-
-    public House(String serviceCode, String serviceName, double usableArea, double rentalCost, int maxPeople, String rentalType, String roomStandard, int numberOfFloors) {
+    public House(String serviceCode, String serviceName, double usableArea, double rentalCost,
+                 int maxPeople, String rentalType, String roomStandard, int numberOfFloors) {
         super(serviceCode, serviceName, usableArea, rentalCost, maxPeople, rentalType);
         this.roomStandard = roomStandard;
         this.numberOfFloors = numberOfFloors;
@@ -36,16 +30,19 @@ public class House extends Facility {
         this.numberOfFloors = numberOfFloors;
     }
 
+    public static House fromCSV(String csv) {
+        String[] parts = csv.split(",", -1);
+        return new House(parts[0], parts[1], Double.parseDouble(parts[2]), Double.parseDouble(parts[3]),
+                Integer.parseInt(parts[4]), parts[5], parts[6], Integer.parseInt(parts[7]));
+    }
+
+    @Override
+    public String toCSV() {
+        return super.toCSV() + "," + roomStandard + "," + numberOfFloors;
+    }
+
+    @Override
     public String toString() {
-        return "House{" +
-                "serviceCode = " + getServiceCode() +
-                ", serviceName = " + getServiceName() +
-                ", usableArea = " + getUsableArea() +
-                ", rentalCost = " + getRentalCost() +
-                ", maxPeople = " + getMaxPeople() +
-                ", rentalType = " + getRentalType() +
-                ", roomStandard = " + roomStandard +
-                ", floors = " + numberOfFloors +
-                "}";
+        return "House " + super.toString() + " | Standard | " + numberOfFloors + " tầng";
     }
 }

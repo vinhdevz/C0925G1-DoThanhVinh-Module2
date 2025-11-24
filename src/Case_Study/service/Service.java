@@ -7,7 +7,7 @@ public interface Service<T> {
 
     void add(T item);
 
-    void edit(T item);
+    void edit(String id);
 
     List<T> getAll();
 }

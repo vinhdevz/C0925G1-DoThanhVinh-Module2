@@ -8,13 +8,9 @@ public class Employee extends Person {
     public Employee() {
     }
 
-    public Employee(String level, String position, double salary) {
-        this.level = level;
-        this.position = position;
-        this.salary = salary;
-    }
-
-    public Employee(String id, String name, String dateOfBirth, String gender, String idCard, String phoneNumber, String email, String level, String position, double salary) {
+    public Employee(String id, String name, String dateOfBirth, String gender,
+                    String idCard, String phoneNumber, String email,
+                    String level, String position, double salary) {
         super(id, name, dateOfBirth, gender, idCard, phoneNumber, email);
         this.level = level;
         this.position = position;
@@ -48,16 +44,9 @@ public class Employee extends Person {
     @Override
     public String toString() {
         return "Employee{" +
-                "id = " + getId() +
-                ", name = " + getName() +
-                ", dob = " + getDateOfBirth() +
-                ", gender = " + getGender() +
-                ", idCard = " + getIdCard() +
-                ", phone = " + getPhoneNumber() +
-                ", email = " + getEmail() +
-                ", level = " + getLevel() +
-                ", position = " + getPosition() +
-                ", salary = " + getSalary() +
-                "}";
+                "level='" + level + '\'' +
+                ", position='" + position + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }

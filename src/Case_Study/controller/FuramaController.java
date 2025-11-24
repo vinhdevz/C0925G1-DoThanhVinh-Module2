@@ -1,59 +1,61 @@
 package Case_Study.controller;
 
-import Case_Study.service.*;
 import java.util.Scanner;
 
 public class FuramaController {
 
     private static final Scanner sc = new Scanner(System.in);
+    private static final EmployeeController employeeController = new EmployeeController();
+    private static final CustomerController customerController = new CustomerController();
+    private static final FacilityController facilityController = new FacilityController();
+    private static final BookingController bookingController = new BookingController();
 
-    private static final IEmployeeService employeeService = new EmployeeService();
-    private static final ICustomerService customerService = new CustomerService();
-    private static final IFacilityService facilityService = new FacilityService();
-    private static final IBookingService bookingService = new BookingService();
-    private static final IPromotionService promotionService = new PromotionService();
 
-    public static void displayMainMenu() {
+    public static void main(String[] args) {
         while (true) {
-            System.out.println("FURAMA RESORT MANAGEMENT");
-            System.out.println("1. Employee Management");
-            System.out.println("2. Customer Management");
-            System.out.println("3. Facility Management");
-            System.out.println("4. Booking Management");
-            System.out.println("5. Promotion Management");
-            System.out.println("6. Exit");
-            System.out.print("Please choose (1-6): ");
+            System.out.println("\n========================================");
+            System.out.println("FURAMA RESORT MANAGEMENT SYSTEM");
+            System.out.println("========================================");
+            System.out.println("1. Quản lý nhân viên");
+            System.out.println("2. Quản lý khách hàng");
+            System.out.println("3. Quản lý cơ sở vật chất");
+            System.out.println("4. Quản lý đặt chỗ");
+            System.out.println("5. Quản lý khuyến mãi");
+            System.out.println("6. Thoát chương trình");
+            System.out.println("----------------------------------------");
+            System.out.print("Nhập lựa chọn (1-6): ");
 
-            int choice = getChoice();
+            int choice;
+            try {
+                choice = Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Nhập số đi bạn ơi!");
+                continue;
+            }
 
             switch (choice) {
-                case 1 -> new EmployeeController(employeeService).menuEmployee();
-                case 2 -> new CustomerController(customerService).menuCustomer();
-                case 3 -> new FacilityController(facilityService).menuFacility();
-//                case 4 -> new BookingController(bookingService, facilityService, customerService).menuBooking();
-//                case 5 -> new PromotionController(bookingService, customerService).menuPromotion();
-                case 6 -> {
-                    System.out.println("\nThank you for using Furama System. Goodbye!");
-                    sc.close();
+                case 1:
+                    employeeController.runEm();
+                    break;
+                case 2:
+                    customerController.runCus();
+                    break;
+                case 3:
+                    facilityController.runFac();
+                    break;
+                case 4:
+                    bookingController.runBook();
+                    break;
+                case 5:
+                    System.out.println("Chức năng Khuyến mãi ");
+                    break;
+                case 6:
+                    System.out.println("\nCảm ơn bạn đã sử dụng hệ thống Furama!");
+                    System.out.println("Hẹn gặp lại đại ca!");
                     return;
-                }
-                default -> System.out.println("Invalid choice! Please enter number from 1 to 6.");
-            }
-        }
-    }
-
-    private static int getChoice() {
-        while (true) {
-            String input = sc.nextLine().trim();
-            try {
-                int num = Integer.parseInt(input);
-                if (num >= 1 && num <= 6) {
-                    return num;
-                } else {
-                    System.out.print("Please enter a number from 1 to 6: ");
-                }
-            } catch (NumberFormatException e) {
-                System.out.print("Invalid input! Please enter a number (1-6): ");
+                default:
+                    System.out.println("Chỉ được chọn từ 1 đến 6 thôi nha!");
+                    break;
             }
         }
     }

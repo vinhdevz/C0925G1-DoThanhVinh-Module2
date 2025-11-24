@@ -1,66 +1,47 @@
 package Case_Study.controller;
 
 import Case_Study.entity.Customer;
-import Case_Study.service.ICustomerService;
+import Case_Study.service.CustomerService;
 import Case_Study.view.CustomerView;
 
+import java.util.Scanner;
+
 public class CustomerController {
+    private final CustomerService serviceCus = new CustomerService();
+    private final Scanner sc = new Scanner(System.in);
 
-    private final ICustomerService customerService;
-    private final CustomerView view;
-
-    public CustomerController(ICustomerService customerService) {
-        this.customerService = customerService;
-        this.view = new CustomerView();
-    }
-
-    public void menuCustomer() {
+    public void runCus() {
         while (true) {
-            int choice = view.showMenu();
-            if (choice == -1) {
-                view.showError("Vui lòng nhập một số!");
+            CustomerView.displayMenuCus();
+            int choice;
+            try {
+                choice = Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Nhập số từ 1 đến 4 thôi nha!");
                 continue;
             }
 
             switch (choice) {
-                case 1 -> view.displayCustomerList(customerService.getAll());
-                case 2 -> addNewCustomer();
-                case 3 -> editCustomer();
-                case 4 -> {
-                    view.showInfo("Trở về menu chính.");
+                case 1:
+                    serviceCus.display();
+                    break;
+                case 2:
+                    Customer c = CustomerView.inputCustomer();
+                    serviceCus.addNewCustomer(c);
+                    System.out.println("Đã thêm khách hàng thành công!\n");
+                    break;
+                case 3:
+                    System.out.print("Nhập mã khách hàng cần sửa (VD: KH-0001): ");
+                    String id = sc.nextLine().trim();
+                    serviceCus.editCustomer(id);
+                    break;
+                case 4:
+                    System.out.println("Đang quay lại menu chính...\n");
                     return;
-                }
-                default -> view.showError("Lựa chọn không hợp lệ!");
+                default:
+                    System.out.println("Chỉ chọn từ 1 đến 4 thôi nha đại ca!");
+                    break;
             }
-        }
-    }
-
-    private void addNewCustomer() {
-        view.showInfo("--- THÊM KHÁCH HÀNG MỚI ---");
-        Customer customer = view.inputCustomer(null);
-        try {
-            customerService.add(customer);
-            view.showSuccess("Khách hàng được thêm thành công!");
-        } catch (Exception e) {
-            view.showError(e.getMessage());
-        }
-    }
-
-    private void editCustomer() {
-        String id = view.inputCustomerId();
-        boolean exists = customerService.getAll().stream()
-                .anyMatch(c -> c.getId().equalsIgnoreCase(id));
-        if (!exists) {
-            view.showError("Không tìm thấy khách hàng có ID: " + id);
-            return;
-        }
-        view.showInfo("Chỉnh sửa ID khách hàng: " + id);
-        Customer updated = view.inputCustomer(id);
-        try {
-            customerService.edit(updated);
-            view.showSuccess("Khách hàng đã cập nhật thành công!");
-        } catch (Exception e) {
-            view.showError(e.getMessage());
         }
     }
 }

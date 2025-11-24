@@ -1,111 +1,63 @@
 package Case_Study.view;
 
 import Case_Study.entity.Customer;
+import Case_Study.repository.AllListFurama;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class CustomerView {
+    private static final Scanner sc = new Scanner(System.in);
 
-    private final Scanner scanner = new Scanner(System.in);
-
-    public int showMenu() {
-        System.out.println("------ CUSTOMER MANAGEMENT ------");
-        System.out.println("1. Display customer list");
-        System.out.println("2. Add new customer");
-        System.out.println("3. Edit customer");
-        System.out.println("4. Return main menu");
-        System.out.print("Choose: ");
-        try {
-            return Integer.parseInt(scanner.nextLine().trim());
-        } catch (NumberFormatException e) {
-            return -1;
-        }
+    public static void displayMenuCus() {
+        System.out.println("\nQUẢN LÝ KHÁCH HÀNG");
+        System.out.println("=====================================");
+        System.out.println("1. Hiển thị danh sách khách hàng");
+        System.out.println("2. Thêm khách hàng mới");
+        System.out.println("3. Chỉnh sửa khách hàng");
+        System.out.println("4. Quay lại menu chính");
+        System.out.println("=====================================");
+        System.out.print("Nhập lựa chọn của bạn (1-4): ");
     }
 
-    public void displayCustomerList(List<Customer> customers) {
-        System.out.println("\n--- Danh sách khách hàng ---");
-        if (customers.isEmpty()) {
-            System.out.println("Không tìm thấy khách hàng nào!");
-        } else {
-            customers.forEach(System.out::println);
-        }
-        System.out.println("---------------------\n");
-    }
+    public static Customer inputCustomer() {
+        System.out.println("\nTHÊM KHÁCH HÀNG MỚI");
+        System.out.println("-------------------------------");
 
-    public String inputCustomerId() {
-        System.out.print("Nhập ID khách hàng để chỉnh sửa: ");
-        return scanner.nextLine().trim();
-    }
+        System.out.println("Mã khách hàng (VD: KH-0001): ");
+        String id = sc.nextLine().trim();
 
-    public Customer inputCustomer(String fixedId) {
-        String id = fixedId;
-        if (id == null) {
-            while (true) {
-                System.out.print("Mã khách hàng (C001, C002...): ");
-                id = scanner.nextLine().trim();
-                if (id.matches("^C\\d{3}$")) break;
-                System.out.println("Định dạng không hợp lệ! Phải là C001, C002...");
-            }
-        } else {
-            System.out.println("Mã khách hàng: " + id + " (không thể thay đổi)");
-        }
+        System.out.println("Họ và tên: ");
+        String name = sc.nextLine().trim();
 
-        System.out.print("Full name: ");
-        String name = scanner.nextLine().trim();
+        System.out.println("Ngày sinh (dd/MM/yyyy): ");
+        String dob = sc.nextLine().trim();
 
-        System.out.print("Date of birth (yyyy-MM-dd): ");
-        String dob = scanner.nextLine().trim();
+        System.out.println("Giới tính (Female/Male): ");
+        String gender = sc.nextLine().trim();
 
-        System.out.print("Gender: ");
-        String gender = scanner.nextLine().trim();
+        System.out.print("Số CMND/CCCD: ");
+        String idCard = sc.nextLine().trim();
 
-        System.out.print("ID Card: ");
-        String idCard = scanner.nextLine().trim();
-
-        System.out.print("Phone number: ");
-        String phone = scanner.nextLine().trim();
+        System.out.print("Số điện thoại: ");
+        String phone = sc.nextLine().trim();
 
         System.out.print("Email: ");
-        String email = scanner.nextLine().trim();
+        String email = sc.nextLine().trim();
 
-        String customerType = selectCustomerType();
-
-        System.out.print("Address: ");
-        String address = scanner.nextLine().trim();
-
-        return new Customer(id, name, dob, gender, idCard, phone, email, customerType, address);
-    }
-
-    private String selectCustomerType() {
-        String[] types = {"Diamond", "Platinum", "Gold", "Silver", "Member"};
-        System.out.println("CHỌN LOẠI CUSTOMER");
-        for (int i = 0; i < types.length; i++) {
-            System.out.printf(" %d. %s%n", i + 1, types[i]);
+        System.out.println("\nLoại khách:");
+        for (int i = 0; i < AllListFurama.typeCustomer.size(); i++) {
+            System.out.println((i + 1) + ". " + AllListFurama.typeCustomer.get(i));
         }
-        while (true) {
-            System.out.printf("Chọn loại customer (1-5):");
-            try {
-                int choice = Integer.parseInt(scanner.nextLine().trim());
-                if (choice >= 1 && choice <= 5) {
-                    return types[choice - 1];
-                }
-                System.out.println("Không hợp lệ! Vui lòng nhập số từ 1 đến 5");
-            } catch (NumberFormatException e) {
-                System.out.println("Vui lòng nhập số!");
-            }
-        }
+
+        System.out.print("Nhập số (1-5): ");
+        int typeChoice = Integer.parseInt(sc.nextLine());
+        String typeCustomer = AllListFurama.typeCustomer.get(typeChoice - 1);
+
+        System.out.println("Địa chỉ: ");
+        String address = sc.nextLine().trim();
+
+        return new Customer(id, name, dob, gender, idCard, phone, email, typeCustomer, address);
     }
 
-    public void showSuccess(String msg) {
-        System.out.println("Success: " + msg);
-    }
 
-    public void showError(String msg) {
-        System.out.println("Error: " + msg);
-    }
-
-    public void showInfo(String msg) {
-        System.out.println("Info: " + msg);
-    }
 }

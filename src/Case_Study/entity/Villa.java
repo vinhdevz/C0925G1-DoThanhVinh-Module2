@@ -6,17 +6,10 @@ public class Villa extends Facility {
     private int numberOfFloors;
 
     public Villa() {
-        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
     }
 
-    public Villa(String roomStandard, double poolArea, int numberOfFloors) {
-        super("SV001", "Villa Sunshine", "VIP", 300, 3, "Daily", 5);
-        this.roomStandard = roomStandard;
-        this.poolArea = poolArea;
-        this.numberOfFloors = numberOfFloors;
-    }
-
-    public Villa(String serviceCode, String serviceName, double usableArea, double rentalCost, int maxPeople, String rentalType, String roomStandard, double poolArea, int numberOfFloors) {
+    public Villa(String serviceCode, String serviceName, double usableArea, double rentalCost,
+                 int maxPeople, String rentalType, String roomStandard, double poolArea, int numberOfFloors) {
         super(serviceCode, serviceName, usableArea, rentalCost, maxPeople, rentalType);
         this.roomStandard = roomStandard;
         this.poolArea = poolArea;
@@ -47,17 +40,26 @@ public class Villa extends Facility {
         this.numberOfFloors = numberOfFloors;
     }
 
+    public static Villa fromCSV(String csv) {
+        String[] parts = csv.split(",", 9);
+        return new Villa(
+                parts[0], parts[1],
+                Double.parseDouble(parts[2]),
+                Double.parseDouble(parts[3]),
+                Integer.parseInt(parts[4]),
+                parts[5], parts[6],
+                Double.parseDouble(parts[7]),
+                Integer.parseInt(parts[8])
+        );
+    }
+
+    @Override
+    public String toCSV() {
+        return super.toCSV() + "," + roomStandard + "," + poolArea + "," + numberOfFloors;
+    }
+
+    @Override
     public String toString() {
-        return "Villa{" +
-                "serviceCode='" + getServiceCode() +
-                ", serviceName='" + getServiceName() +
-                ", usableArea=" + getUsableArea() +
-                ", rentalCost=" + getRentalCost() +
-                ", maxPeople=" + getMaxPeople() +
-                ", rentalType='" + getRentalType() +
-                ", roomStandard='" + roomStandard +
-                ", poolArea=" + poolArea +
-                ", floors=" + numberOfFloors +
-                '}';
+        return "Villa " + super.toString() + " | VIP | Hồ bơi " + poolArea + "m² | " + numberOfFloors + " tầng";
     }
 }

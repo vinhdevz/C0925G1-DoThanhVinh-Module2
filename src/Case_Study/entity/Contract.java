@@ -1,27 +1,27 @@
 package Case_Study.entity;
 
-public class Contact {
-    private String contactNumber;
+public class Contract {
+    private String contractNumber;
     private String bookingCode;
     private double deposit;
     private double totalPayment;
 
-    public Contact() {
+    public Contract() {
     }
 
-    public Contact(String contactNumber, String bookingCode, double deposit, double totalPayment) {
-        this.contactNumber = contactNumber;
+    public Contract(String contractNumber, String bookingCode, double deposit, double totalPayment) {
+        this.contractNumber = contractNumber;
         this.bookingCode = bookingCode;
         this.deposit = deposit;
         this.totalPayment = totalPayment;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getContractNumber() {
+        return contractNumber;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
     }
 
     public String getBookingCode() {
@@ -48,12 +48,13 @@ public class Contact {
         this.totalPayment = totalPayment;
     }
 
+    @Override
     public String toString() {
-        return "Contact{" +
-                "contactNumber = " + getContactNumber() +
-                ", bookingCode = " + getBookingCode() +
-                ", deposit = " + getDeposit() +
-                ", totalPayment = " + getTotalPayment() +
-                "}";
+        return "Contract{" +
+                "contactNumber='" + contractNumber + '\'' +
+                ", bookingCode='" + bookingCode + '\'' +
+                ", deposit=" + deposit +
+                ", totalPayment=" + totalPayment +
+                '}';
     }
 }

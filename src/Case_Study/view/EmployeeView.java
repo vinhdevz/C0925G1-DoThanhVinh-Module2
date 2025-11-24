@@ -1,126 +1,68 @@
 package Case_Study.view;
 
 import Case_Study.entity.Employee;
+import Case_Study.repository.AllListFurama;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeView {
+    private static final Scanner sc = new Scanner(System.in);
 
-    private final Scanner sc = new Scanner(System.in);
-
-    public int showMenu() {
-        System.out.println("\n------ EMPLOYEE MANAGEMENT ------");
-        System.out.println("1. Display list employee");
-        System.out.println("2. Add new employee");
-        System.out.println("3. Edit employee");
-        System.out.println("4. Return main menu");
-        System.out.print("Choose: ");
-        try {
-            return Integer.parseInt(sc.nextLine().trim());
-        } catch (Exception e) {
-            return -1;
-        }
+    public static void displayMenuEm() {
+        System.out.println("\nQUẢN LÝ NHÂN VIÊN");
+        System.out.println("=====================================");
+        System.out.println("1. Hiển thị danh sách nhân viên");
+        System.out.println("2. Thêm nhân viên mới");
+        System.out.println("3. Chỉnh sửa nhân viên");
+        System.out.println("4. Quay lại menu chính");
+        System.out.println("=====================================");
+        System.out.print("Nhập lựa chọn (1-4): ");
     }
 
-    public void displayEmployeeList(List<Employee> employees) {
-        System.out.println("\n--- Danh sách nhân viên ---");
-        if (employees.isEmpty()) {
-            System.out.println("Không tìm thấy nhân viên nào!");
-        } else {
-            employees.forEach(System.out::println);
-        }
-        System.out.println("---------------------\n");
-    }
+    public static Employee inputEmployee() {
+        System.out.println("\nTHÊM NHÂN VIÊN MỚI");
+        System.out.println("-------------------------------------");
 
-    public String inputEmployeeId() {
-        System.out.print("Nhập ID nhân viên để chỉnh sửa: ");
-        return sc.nextLine().trim();
-    }
+        System.out.print("Mã nhân viên (VD: NV-0001): ");
+        String id = sc.nextLine().trim();
 
-    public Employee inputEmployee(String fixedId) {
-        String id = fixedId;
-
-        if (id == null) {
-            while (true) {
-                System.out.print("ID nhân viên (VD E001) ");
-                id = sc.nextLine().trim();
-                if (id.matches("^E\\d{3}$")) break;
-                else System.out.println("Không hợp lệ! Phải là E001, E002...");
-            }
-        } else {
-            System.out.println("ID nhân viên " + id + " (không thể thay đổi)");
-        }
-
-        System.out.print("Full name: ");
+        System.out.print("Họ và tên: ");
         String name = sc.nextLine().trim();
 
-        System.out.print("Date of birth: (yyyy-MM-dd) ");
+        System.out.print("Ngày sinh (dd/MM/yyyy): ");
         String dob = sc.nextLine().trim();
 
-        System.out.print("Gender: (Male/Female) ");
+        System.out.println("Giới tính (Female/Male): ");
         String gender = sc.nextLine().trim();
 
-        System.out.print("ID Card: ");
+        System.out.print("Số CMND/CCCD: ");
         String idCard = sc.nextLine().trim();
 
-        System.out.print("Phone number: ");
+        System.out.print("Số điện thoại: ");
         String phone = sc.nextLine().trim();
 
         System.out.print("Email: ");
         String email = sc.nextLine().trim();
 
-        String level = chooseFromList("=== CHỌN TRÌNH ĐỘ ===",
-                new String[]{"Trung cấp", "Cao đẳng", "Đại học", "Sau đại học"},
-                "Vui lòng chọn số từ: (1-4)");
-
-        String position = chooseFromList("=== CHỌN VỊ TRÍ ===",
-                new String[]{"Lễ tân", "Phục vụ", "Chuyên viên", "Giám sát", "Quản lý", "Giám đốc"},
-                "Vui lòng chọn số từ: (1-6)");
-
-        double salary = 0;
-        while (true) {
-            System.out.print("Lương: (VND) ");
-            try {
-                salary = Double.parseDouble(sc.nextLine().trim());
-                if (salary > 0) break;
-                System.out.println("Mức lương phải tích cực!");
-            } catch (Exception e) {
-                System.out.println("Vui lòng nhập số hợp lệ!");
-            }
+        System.out.println("\nChọn trình độ:");
+        for (int i = 0; i < AllListFurama.level.size(); i++) {
+            System.out.println((i + 1) + ". " + AllListFurama.level.get(i));
         }
+        System.out.print("Nhập số (1-4): ");
+        int levelChoice = Integer.parseInt(sc.nextLine());
+        String level = AllListFurama.level.get(levelChoice - 1);
+
+        System.out.println("\nChọn vị trí công việc:");
+        for (int i = 0; i < AllListFurama.position.size(); i++) {
+            System.out.println((i + 1) + ". " + AllListFurama.position.get(i));
+        }
+        System.out.print("Nhập số (1-6): ");
+        int positionChoice = Integer.parseInt(sc.nextLine());
+        String position = AllListFurama.position.get(positionChoice - 1);
+
+        System.out.print("\nNhập mức lương: ");
+        double salary = Double.parseDouble(sc.nextLine());
 
         return new Employee(id, name, dob, gender, idCard, phone, email, level, position, salary);
-    }
-
-    private String chooseFromList(String title, String[] options, String prompt) {
-        System.out.println("\n" + title);
-        for (int i = 0; i < options.length; i++) {
-            System.out.printf("%d. %s%n", i +1, options[i]);
-        }
-        while (true) {
-            System.out.print(prompt + " ");
-            try {
-                int choice = Integer.parseInt(sc.nextLine().trim());
-                if (choice >= 1 && choice <= options.length) {
-                    return options[choice - 1];
-                }
-                System.out.println("Không hợp lệ! Vui lòng chọn từ 1-" + options.length);
-            } catch (Exception e) {
-                System.out.println("Vui lòng nhập một số!");
-            }
-        }
-    }
-
-    public void showSuccess(String msg) {
-        System.out.println("Success: " + msg);
-    }
-
-    public void showError(String msg) {
-        System.out.println("Error: " + msg);
-    }
-
-    public void showInfo(String msg) {
-        System.out.println("Info: " + msg);
     }
 }

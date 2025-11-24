@@ -1,6 +1,6 @@
 package Case_Study.entity;
 
-public class Facility {
+public abstract class Facility {
     private String serviceCode;
     private String serviceName;
     private double usableArea;
@@ -8,10 +8,11 @@ public class Facility {
     private int maxPeople;
     private String rentalType;
 
-    public Facility(String sv001, String villaSunshine, String vip, int i, int i1, String daily, int i2) {
+    public Facility() {
     }
 
-    public Facility(String serviceCode, String serviceName, double usableArea, double rentalCost, int maxPeople, String rentalType) {
+    public Facility(String serviceCode, String serviceName, double usableArea,
+                    double rentalCost, int maxPeople, String rentalType) {
         this.serviceCode = serviceCode;
         this.serviceName = serviceName;
         this.usableArea = usableArea;
@@ -66,5 +67,24 @@ public class Facility {
 
     public void setRentalType(String rentalType) {
         this.rentalType = rentalType;
+    }
+
+
+
+    public String toCSV() {
+        return serviceCode + "," + serviceName + "," + usableArea + "," +
+                rentalCost + "," + maxPeople + "," + rentalType;
+    }
+
+    @Override
+    public String toString() {
+        return "Facility{" +
+                "serviceCode='" + serviceCode + '\'' +
+                ", serviceName='" + serviceName + '\'' +
+                ", usableArea=" + usableArea +
+                ", rentalCost=" + rentalCost +
+                ", maxPeople=" + maxPeople +
+                ", rentalType='" + rentalType + '\'' +
+                '}';
     }
 }

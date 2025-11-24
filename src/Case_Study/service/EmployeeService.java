@@ -2,32 +2,25 @@ package Case_Study.service;
 
 import Case_Study.entity.Employee;
 import Case_Study.repository.EmployeeRepository;
-import Case_Study.repository.IEmployeeRepository;
 
 import java.util.List;
 
-public class EmployeeService implements IEmployeeService {
+public class EmployeeService {
+    private final EmployeeRepository emrepo = new EmployeeRepository();
 
-    public static final IEmployeeRepository employeeRepository = new EmployeeRepository();
-
-
-    @Override
     public void display() {
-        employeeRepository.display();
+        emrepo.display();
     }
 
-    @Override
-    public void add(Employee item) {
-        employeeRepository.add(item);
+    public void addNewEmployee(Employee item) {
+        emrepo.add(item);
     }
 
-    @Override
-    public void edit(Employee item) {
-        employeeRepository.edit(item);
+    public void editEmployee(String id) {
+        emrepo.edit(id);
     }
 
-    @Override
     public List<Employee> getAll() {
-        return employeeRepository.getAll();
+        return emrepo.getAll();
     }
 }

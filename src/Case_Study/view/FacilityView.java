@@ -1,135 +1,82 @@
 package Case_Study.view;
 
-import Case_Study.entity.*;
+import Case_Study.entity.House;
+import Case_Study.entity.Room;
+import Case_Study.entity.Villa;
+import Case_Study.repository.FacilityRepository;
 
-import java.util.Map;
 import java.util.Scanner;
 
 public class FacilityView {
-    private final Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
+    private static final FacilityRepository repo = FacilityRepository.getInstance();
 
-    public int showMenu() {
-        System.out.println("\n====== FACILITY MANAGEMENT ======");
-        System.out.println("1. Display facility list");
-        System.out.println("2. Add new facility");
-        System.out.println("3. Display maintenance list");
-        System.out.println("4. Return to main menu");
-        System.out.print("Choose: ");
-        return readInt();
+    public static void displayMenuFacility() {
+        System.out.println("\nQUẢN LÝ CƠ SỞ VẬT CHẤT");
+        System.out.println("1. Hiển thị danh sách dịch vụ");
+        System.out.println("2. Thêm mới dịch vụ");
+        System.out.println("3. Hiển thị danh sách dịch vụ bảo trì");
+        System.out.println("4. Quay lại menu chính");
+        System.out.print("Chọn (1-4): ");
     }
 
-    public int showAddMenu() {
-        System.out.println("\n--- ADD NEW FACILITY ---");
-        System.out.println("1. Add new Villa");
-        System.out.println("2. Add new House");
-        System.out.println("3. Add new Room");
-        System.out.println("4. Back");
-        System.out.print("Choose: ");
-        return readInt();
+    public static Villa inputVilla() {
+        System.out.println("Nhập mã dịch vụ: ");
+        String code = sc.nextLine();
+        System.out.print("Tên dịch vụ: ");
+        String name = sc.nextLine();
+        System.out.print("Diện tích: ");
+        double area = Double.parseDouble(sc.nextLine());
+        System.out.print("Chi phí thuê: ");
+        double cost = Double.parseDouble(sc.nextLine());
+        System.out.print("Số người tối đa: ");
+        int people = Integer.parseInt(sc.nextLine());
+        System.out.print("Kiểu thuê: ");
+        String rental = sc.nextLine();
+        System.out.print("Tiêu chuẩn phòng: ");
+        String standard = sc.nextLine();
+        System.out.print("Diện tích hồ bơi: ");
+        double pool = Double.parseDouble(sc.nextLine());
+        System.out.print("Số tầng: ");
+        int floors = Integer.parseInt(sc.nextLine());
+        return new Villa(code, name, area, cost, people, rental, standard, pool, floors);
     }
 
-    public Facility createFacility(String code, String type) {
-        System.out.println("\n=== ADD " + type.toUpperCase() + " (Code: " + code + ") ===");
-
-        System.out.print("Service name: ");
-        String name = sc.nextLine().trim();
-
-        System.out.print("Usable area (m²): ");
-        double area = Double.parseDouble(sc.nextLine().trim());
-
-        System.out.print("Rental cost/day (VND): ");
-        double cost = Double.parseDouble(sc.nextLine().trim());
-
-        System.out.print("Max people: ");
-        int people = Integer.parseInt(sc.nextLine().trim());
-
-        System.out.print("Rental type (Year/Month/Day/Hour): ");
-        String rentalType = sc.nextLine().trim();
-
-        return switch (type) {
-            case "Villa" -> {
-                System.out.print("Room standard: ");
-                String standard = sc.nextLine().trim();
-                System.out.print("Pool area (m²): ");
-                double pool = Double.parseDouble(sc.nextLine().trim());
-                System.out.print("Number of floors: ");
-                int floors = Integer.parseInt(sc.nextLine().trim());
-                Villa v = new Villa();
-                v.setServiceCode(code);
-                v.setServiceName(name);
-                v.setUsableArea(area);
-                v.setRentalCost(cost);
-                v.setMaxPeople(people);
-                v.setRentalType(rentalType);
-                v.setRoomStandard(standard);
-                v.setPoolArea(pool);
-                v.setNumberOfFloors(floors);
-                yield v;
-            }
-            case "House" -> {
-                System.out.print("Room standard: ");
-                String standard = sc.nextLine().trim();
-                System.out.print("Number of floors: ");
-                int floors = Integer.parseInt(sc.nextLine().trim());
-                House h = new House();
-                h.setServiceCode(code);
-                h.setServiceName(name);
-                h.setUsableArea(area);
-                h.setRentalCost(cost);
-                h.setMaxPeople(people);
-                h.setRentalType(rentalType);
-                h.setRoomStandard(standard);
-                h.setNumberOfFloors(floors);
-                yield h;
-            }
-            case "Room" -> {
-                System.out.print("Free service: ");
-                String free = sc.nextLine().trim();
-                Room r = new Room();
-                r.setServiceCode(code);
-                r.setServiceName(name);
-                r.setUsableArea(area);
-                r.setRentalCost(cost);
-                r.setMaxPeople(people);
-                r.setRentalType(rentalType);
-                r.setFreeService(free);
-                yield r;
-            }
-            default -> null;
-        };
+    public static House inputHouse() {
+        System.out.println("Nhập mã dịch vụ: ");
+        String code = sc.nextLine();
+        System.out.print("Tên dịch vụ: ");
+        String name = sc.nextLine();
+        System.out.print("Diện tích: ");
+        double area = Double.parseDouble(sc.nextLine());
+        System.out.print("Chi phí thuê: ");
+        double cost = Double.parseDouble(sc.nextLine());
+        System.out.print("Số người tối đa: ");
+        int people = Integer.parseInt(sc.nextLine());
+        System.out.print("Kiểu thuê: ");
+        String rental = sc.nextLine();
+        System.out.print("Tiêu chuẩn phòng: ");
+        String standard = sc.nextLine();
+        System.out.print("Số tầng: ");
+        int floors = Integer.parseInt(sc.nextLine());
+        return new House(code, name, area, cost, people, rental, standard, floors);
     }
 
-    public void displayList(Map<Facility, Integer> map) {
-        System.out.println("\n=== FACILITY LIST ===");
-        if (map.isEmpty()) System.out.println("Empty!");
-        else map.forEach((f, c) -> System.out.println(f + " | Used: " + c + " times"));
-    }
-
-    public void displayMaintenance(Map<Facility, Integer> map) {
-        System.out.println("\n=== NEED MAINTENANCE (≥5 times) ===");
-        boolean has = false;
-        for (var e : map.entrySet()) {
-            if (e.getValue() >= 5) {
-                System.out.println(e.getKey() + " | Used: " + e.getValue() + " times");
-                has = true;
-            }
-        }
-        if (!has) System.out.println("No facility needs maintenance!");
-    }
-
-    public void showSuccess(String msg) {
-        System.out.println("SUCCESS → " + msg);
-    }
-
-    public void showError(String msg) {
-        System.out.println("ERROR → " + msg);
-    }
-
-    private int readInt() {
-        while (true) try {
-            return Integer.parseInt(sc.nextLine().trim());
-        } catch (Exception e) {
-            System.out.print("Please enter a number: ");
-        }
+    public static Room inputRoom() {
+        System.out.println("Nhập mã dịch vụ: ");
+        String code = sc.nextLine();
+        System.out.print("Tên dịch vụ: ");
+        String name = sc.nextLine();
+        System.out.print("Diện tích: ");
+        double area = Double.parseDouble(sc.nextLine());
+        System.out.print("Chi phí thuê: ");
+        double cost = Double.parseDouble(sc.nextLine());
+        System.out.print("Số người tối đa: ");
+        int people = Integer.parseInt(sc.nextLine());
+        System.out.print("Kiểu thuê: ");
+        String rental = sc.nextLine();
+        System.out.print("Dịch vụ miễn phí: ");
+        String free = sc.nextLine();
+        return new Room(code, name, area, cost, people, rental, free);
     }
 }

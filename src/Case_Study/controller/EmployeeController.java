@@ -1,76 +1,47 @@
 package Case_Study.controller;
 
 import Case_Study.entity.Employee;
-import Case_Study.service.IEmployeeService;
+import Case_Study.service.EmployeeService;
 import Case_Study.view.EmployeeView;
 
+import java.util.Scanner;
+
 public class EmployeeController {
+    private final EmployeeService serviceEmp = new EmployeeService();
+    private final Scanner sc = new Scanner(System.in);
 
-    private final IEmployeeService employeeService;
-    private final EmployeeView view;
-
-    public EmployeeController(IEmployeeService employeeService) {
-        this.employeeService = employeeService;
-        this.view = new EmployeeView();
-    }
-
-    public void menuEmployee() {
+    public void runEm() {
         while (true) {
-            int choice = view.showMenu();
-
-            if (choice == -1) {
-                view.showError("Vui lòng nhập một số!");
+            EmployeeView.displayMenuEm();
+            int choice;
+            try {
+                choice = Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Nhập số từ 1 đến 4 thôi nha!");
                 continue;
             }
 
             switch (choice) {
-                case 1 -> showAllEmployees();
-                case 2 -> addNewEmployee();
-                case 3 -> editEmployee();
-                case 4 -> {
-                    view.showInfo("Trở về menu chính.");
+                case 1:
+                    serviceEmp.display();
+                    break;
+                case 2:
+                    Employee e = EmployeeView.inputEmployee();
+                    serviceEmp.addNewEmployee(e);
+                    System.out.println("Đã thêm nhân viên thành công!\n");
+                    break;
+                case 3:
+                    System.out.print("Nhập mã nhân viên cần sửa (VD: NV-0001): ");
+                    String id = sc.nextLine().trim();
+                    serviceEmp.editEmployee(id);
+                    break;
+                case 4:
+                    System.out.println("Đang quay lại menu chính...\n");
                     return;
-                }
-                default -> view.showError("Lựa chọn không hợp lệ! Vui lòng thử lại.");
+                default:
+                    System.out.println("Chỉ chọn từ 1 đến 4 thôi nha đại ca!");
+                    break;
             }
-        }
-    }
-
-    private void showAllEmployees() {
-        view.displayEmployeeList(employeeService.getAll());
-    }
-
-    private void addNewEmployee() {
-        view.showInfo("--- THÊM NHÂN VIÊN MỚI ---");
-        Employee employee = view.inputEmployee(null);
-
-        try {
-            employeeService.add(employee);
-            view.showSuccess("Đã thêm nhân viên thành công!");
-        } catch (Exception e) {
-            view.showError(e.getMessage());
-        }
-    }
-
-    private void editEmployee() {
-        String id = view.inputEmployeeId();
-
-        boolean exists = employeeService.getAll().stream()
-                .anyMatch(e -> e.getId().equalsIgnoreCase(id));
-
-        if (!exists) {
-            view.showError("Không tìm thấy nhân viên có ID: " + id);
-            return;
-        }
-
-        view.showInfo("Chỉnh sửa ID nhân viên: " + id);
-        Employee updated = view.inputEmployee(id);
-
-        try {
-            employeeService.edit(updated);
-            view.showSuccess("Nhân viên được cập nhật thành công!");
-        } catch (Exception e) {
-            view.showError(e.getMessage());
         }
     }
 }

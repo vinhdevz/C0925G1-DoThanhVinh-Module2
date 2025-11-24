@@ -1,7 +1,5 @@
 package Case_Study.repository;
 
-import Case_Study.entity.Contact;
-
 import java.util.List;
 
 public interface Repository<T> {
@@ -9,7 +7,7 @@ public interface Repository<T> {
 
     void add(T item);
 
-    void edit(T item);
+    void edit(String id);
 
     List<T> getAll();
 }

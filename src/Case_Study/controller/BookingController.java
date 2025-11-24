@@ -1,32 +1,37 @@
+// Case_Study/controller/BookingController.java
 package Case_Study.controller;
-import java.util.Scanner;
+
+import Case_Study.entity.Booking;
+import Case_Study.service.BookingService;
+import Case_Study.service.IBookingService;
+import Case_Study.view.BookingView;
 
 public class BookingController {
-    Scanner scanner = new Scanner(System.in);
 
-    public void menuBooking() {
+    private final IBookingService bookingService = new BookingService();
+    private final BookingView view = new BookingView();
+
+    public void runBook() {
         while (true) {
-            System.out.println("------ BOOKING MANAGEMENT ------");
-            System.out.println("1. Add new booking");
-            System.out.println("2. Display booking list");
-            System.out.println("3. Create new contract");
-            System.out.println("4. Display contract list");
-            System.out.println("5. Return main menu");
-            System.out.print("Choose: ");
-
-            int choice = Integer.parseInt(scanner.nextLine());
+            int choice = view.showMenu();
 
             switch (choice) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
+                case 1 -> {
+                    Booking booking = view.inputNewBooking();
+                    if (booking != null) {
+                        bookingService.add(booking);
+                        System.out.println("→ Thêm booking thành công!");
+                    }
+                }
+                case 2 -> bookingService.display();
+                case 3 -> bookingService.createContract();
+                case 4 -> bookingService.displayContracts();
+                case 5 -> bookingService.editContract();
+                case 6 -> {
+                    System.out.println("Quay lại menu chính...\n");
                     return;
+                }
+                default -> view.showError("Vui lòng chọn từ 1-6!");
             }
         }
     }
