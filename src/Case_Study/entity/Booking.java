@@ -1,5 +1,6 @@
 package Case_Study.entity;
 
+
 import java.util.Objects;
 
 public class Booking implements Comparable<Booking> {
@@ -92,13 +93,21 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public String toString() {
-        return "Booking{" +
-                "bookingCode='" + bookingCode + '\'' +
-                ", bookingDate='" + bookingDate + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", customerCode='" + customerCode + '\'' +
-                ", serviceCode='" + serviceCode + '\'' +
-                '}';
+        return String.format("Booking{mã=%-8s | đặt=%-10s | từ=%-10s → %-10s | KH=%-8s | DV=%s}",
+                bookingCode,
+                formatDate(bookingDate),
+                formatDate(startDate),
+                formatDate(endDate),
+                customerCode,
+                serviceCode
+        );
+    }
+
+    private String formatDate(String yyyy_MM_dd) {
+        if (yyyy_MM_dd == null || !yyyy_MM_dd.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            return yyyy_MM_dd;
+        }
+        String[] p = yyyy_MM_dd.split("-");
+        return p[2] + "/" + p[1] + "/" + p[0]; // 2025-12-20 → 20/12/2025
     }
 }

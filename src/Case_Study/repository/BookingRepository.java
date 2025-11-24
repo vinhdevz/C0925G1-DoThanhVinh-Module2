@@ -8,27 +8,30 @@ import java.util.*;
 
 public class BookingRepository implements Repository<Booking> {
 
-    private static final Set<Booking> bookings = new TreeSet<>(new BookingComparator());
+    private static final Set<Booking> bookings = new TreeSet<>(
+            Comparator
+                    .comparing(Booking::getBookingDate)
+                    .thenComparing(Booking::getCustomerCode)
+    );
 
     static {
-        bookings.add(new Booking("BK-0001", "2025-11-20", "2025-12-01", "2025-12-05", "KH-0001", "SVVL-0001"));
-        bookings.add(new Booking("BK-0002", "2025-11-21", "2025-12-03", "2025-12-10", "KH-0002", "SVHO-0001"));
-        bookings.add(new Booking("BK-0003", "2025-11-19", "2025-12-01", "2025-12-08", "KH-0003", "SVRO-0001"));
-        bookings.add(new Booking("BK-0004", "2025-11-22", "2025-12-01", "2025-12-03", "KH-0004", "SVVL-0002"));
-        bookings.add(new Booking("BK-0005", "2025-11-18", "2025-11-25", "2025-11-30", "KH-0005", "SVHO-0002"));
+        bookings.add(new Booking("BK-0001", "20-12-2025", "01-12-2025", "05-12-2025", "KH-0001", "SVVL-0001"));
+        bookings.add(new Booking("BK-0002", "21-12-2025", "02-12-2025", "10-12-2025", "KH-0002", "SVHO-0001"));
+        bookings.add(new Booking("BK-0003", "22-12-2025", "03-12-2025", "15-12-2025", "KH-0002", "SVHO-0001"));
+
     }
 
     @Override
     public void display() {
         if (bookings.isEmpty()) {
-            System.out.println("Không có booking nào!");
+            System.out.println("Chưa có booking nào!");
             return;
         }
-        System.out.println("════════════════════════════════ DANH SÁCH BOOKING ════════════════════════════════");
+        System.out.println("\n=== DANH SÁCH BOOKING ===");
         for (Booking b : bookings) {
             System.out.println(b);
         }
-        System.out.println("══════════════════════════════════════════════════════════════════════════════════");
+        System.out.println();
     }
 
     @Override
@@ -36,7 +39,7 @@ public class BookingRepository implements Repository<Booking> {
         if (!bookings.add(booking)) {
             System.out.println("→ Booking " + booking.getBookingCode() + " đã tồn tại! Không thể thêm.");
         } else {
-            System.out.println("→ Thêm booking " + booking.getBookingCode() + " thành công!");
+            System.out.println("→ Thêm booking " + booking.getBookingDate() + " thành công!");
         }
     }
 

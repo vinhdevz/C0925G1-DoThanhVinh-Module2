@@ -1,12 +1,15 @@
 package Case_Study.view;
 
 import Case_Study.entity.Booking;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
 public class BookingView {
     private final Scanner sc = new Scanner(System.in);
+    private static final SimpleDateFormat vn_format = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat STORAGE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public int showMenu() {
         System.out.println("\n===== BOOKING MANAGEMENT =====");
@@ -26,6 +29,7 @@ public class BookingView {
 
     public Booking inputNewBooking() {
         System.out.println("\n--- NHẬP THÔNG TIN BOOKING MỚI ---");
+
         System.out.print("Mã khách hàng: ");
         String customerCode = sc.nextLine().trim();
 
@@ -33,18 +37,44 @@ public class BookingView {
         String serviceCode = sc.nextLine().trim().toUpperCase();
 
         System.out.print("Ngày bắt đầu (dd/MM/yyyy): ");
-        String startDate = sc.nextLine().trim();
+        String startInput = sc.nextLine().trim();
+        String startDate = convertToStorage(startInput);
 
         System.out.print("Ngày kết thúc (dd/MM/yyyy): ");
-        String endDate = sc.nextLine().trim();
+        String endInput = sc.nextLine().trim();
+        String endDate = convertToStorage(endInput);
 
-        String bookingCode = String.format("BK%04d", getNextId());
-        String bookingDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String bookingCode = "BK-" + String.format("%04d", getNextId());
 
-        return new Booking(bookingCode, bookingDate, startDate, endDate, customerCode, serviceCode);
+        System.out.print("BookingDate: (dd/MM/yyyy): ");
+        String startBKInput = sc.nextLine().trim();
+        String BookingDate= convertToStorage(startBKInput);
+
+
+        return new Booking(bookingCode, BookingDate , startDate, endDate, customerCode, serviceCode);
+    }
+
+    private String convertToStorage(String inputDate) {
+        try {
+            Date date = vn_format.parse(inputDate);
+            return STORAGE_FORMAT.format(date);
+        } catch (Exception e) {
+            System.out.println("Lỗi định dạng ngày, lưu nguyên bản: " + inputDate);
+            return inputDate;
+        }
+    }
+
+    public static String formatForDisplay(String storedDate) {
+        try {
+            Date date = STORAGE_FORMAT.parse(storedDate);
+            return vn_format.format(date);
+        } catch (Exception e) {
+            return storedDate;
+        }
     }
 
     private static int idCounter = 1;
+
     private static int getNextId() {
         return idCounter++;
     }

@@ -1,4 +1,3 @@
-// Case_Study/controller/BookingController.java
 package Case_Study.controller;
 
 import Case_Study.entity.Booking;
