@@ -2,12 +2,22 @@ package ss8_clean_code_refactoring_to_java.bai_tap.repository;
 
 import ss8_clean_code_refactoring_to_java.bai_tap.entity.Vehicle;
 
+import java.util.List;
+
 public interface IVehicleRepository {
-    Vehicle[] findAll();
+    List<Vehicle> getAll();
 
-    void add(Vehicle vehicle);
+    void addVehicle(Vehicle vehicle);
 
-    boolean delete(String license);
+    void deleteVehicle(String licensePlate);
 
-    Vehicle[] searchByLicense(String keyword);
+    void displayAll();
+
+    void displayTruck();
+
+    void displayCar();
+
+    void displayMotorbike();
+
+    Vehicle findByLicensePlate(String licensePlate);
 }

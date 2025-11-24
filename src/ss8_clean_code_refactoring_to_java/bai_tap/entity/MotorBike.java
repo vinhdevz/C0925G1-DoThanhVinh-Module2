@@ -17,6 +17,16 @@ public class MotorBike extends Vehicle {
     }
 
     @Override
+    public String toCSV() {
+        return String.format("Motorbike,%s,%s,%d,%s,%d",
+                getLicensePlate(),
+                getManufacturer(),
+                getYear(),
+                getOwner(),
+                wattage);
+    }
+
+    @Override
     public String toString() {
         return "Xe máy: " + super.toString() +
                 ", Công suất: " + wattage + " cc";

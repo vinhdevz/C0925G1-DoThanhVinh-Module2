@@ -17,6 +17,16 @@ public class Truck extends Vehicle {
     }
 
     @Override
+    public String toCSV() {
+        return String.format("Truck,%s,%s,%d,%s,%d",
+                getLicensePlate(),
+                getManufacturer(),
+                getYear(),
+                getOwner(),
+                payLoad);
+    }
+
+    @Override
     public String toString() {
         return "Xe tải: " + super.toString() +
                 ", Trọng tải: " + payLoad + "tấn";

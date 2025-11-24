@@ -5,19 +5,28 @@ import ss8_clean_code_refactoring_to_java.bai_tap.entity.MotorBike;
 import ss8_clean_code_refactoring_to_java.bai_tap.entity.Truck;
 import ss8_clean_code_refactoring_to_java.bai_tap.entity.Vehicle;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class VehicleView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void displayVehicleList(Vehicle[] vehicles) {
-        if (vehicles == null || vehicles.length == 0) {
+    public static void displayVehicleList(List<Vehicle> vehicles) {
+        if (vehicles == null || vehicles.isEmpty()) {
             System.out.println("Danh sách trống!");
             return;
         }
         for (Vehicle vehicle : vehicles) {
             System.out.println(vehicle);
         }
+    }
+
+    public static void displayVehicleList(Vehicle[] vehicles) {
+        if (vehicles == null || vehicles.length == 0) {
+            System.out.println("Danh sách trống!");
+            return;
+        }
+        displayVehicleList(java.util.Arrays.asList(vehicles));
     }
 
     public static Vehicle inputVehicleData() {

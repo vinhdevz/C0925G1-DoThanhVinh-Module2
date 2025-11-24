@@ -1,6 +1,6 @@
 package ss8_clean_code_refactoring_to_java.bai_tap.entity;
 
-public class Vehicle {
+public abstract class Vehicle {
     private String licensePlate;
     private String manufacturer;
     private int year;
@@ -44,6 +44,8 @@ public class Vehicle {
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
+    public abstract String toCSV();
 
     @Override
     public String toString() {

@@ -27,6 +27,12 @@ public class Car extends Vehicle {
     }
 
     @Override
+    public String toCSV() {
+        return String.format("Car,%s,%s,%d,%s,%d,%s",
+                getLicensePlate(), getManufacturer(), getYear(), getOwner(), seats, type);
+    }
+
+    @Override
     public String toString() {
         return "Ô tô: " + super.toString() +
                 ", Chỗ ngồi: " + seats +

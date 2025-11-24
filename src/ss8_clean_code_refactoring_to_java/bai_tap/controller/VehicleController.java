@@ -5,6 +5,7 @@ import ss8_clean_code_refactoring_to_java.bai_tap.service.IVehicleService;
 import ss8_clean_code_refactoring_to_java.bai_tap.service.VehicleService;
 import ss8_clean_code_refactoring_to_java.bai_tap.view.VehicleView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class VehicleController {
@@ -40,7 +41,7 @@ public class VehicleController {
                     break;
 
                 case DISPLAY:
-                    Vehicle[] list = vehicleService.findAll();
+                    List<Vehicle> list = vehicleService.findAll();
                     VehicleView.displayVehicleList(list);
                     break;
 
